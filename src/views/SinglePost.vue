@@ -2,8 +2,9 @@
     <div class="singlePost">
         <button @click="$router.push('/')" class="singlePost__back">Back</button>
         <div class="singlePost-post">
-            <p><strong>{{post.id}})</strong>{{post.title}}</p>
-            {{userPost.email}}
+            <h3 class="singlePost-post__title"><strong>{{post.id}})</strong>{{post.title}}</h3>
+            <p class="singlePost-post__body">{{post.body}}</p>
+            <p class="singlePost-post__user">{{userPost.name}}  <span>{{userPost.email}}</span> </p>
         </div>
     </div>
 </template>
@@ -52,11 +53,41 @@
             font-size: 20px;
             border: 1px solid rgba(0, 0, 0, 0.2);
             transition: .3s;
+            margin-bottom: 100px;
 
             &:hover {
                 background-color: #000;
                 color: #fff;
                 transition: .3s;
+            }
+        }
+
+        &-post {
+            display: flex;
+            flex-direction: column;
+            padding: 20px;
+            width: 1000px;
+            margin: 0 auto;
+            border: 1px solid rgba(0, 0, 0, .3);
+
+            &__title {
+                font-size: 30px;
+            }
+
+            &__body {
+                font-size: 20px;
+            }
+
+            &__user {
+                display: flex;
+                justify-content: flex-end;
+                font-size: 20px;
+                font-weight: bold;
+
+                span {
+                    font-weight: normal;
+                    color: gray;
+                }
             }
         }
     }
