@@ -1,7 +1,7 @@
 <template>
     <div class="allPosts">
         <div class="allPosts__posts">
-            <router-link :to="'/post/' + post.id" v-for="post in itemsOnPage" :key="post.id">
+            <router-link :to="'/post/' + post.id" v-for="post in itemsOnPage" :key="post.id" class="router">
                 <Post :postData="post"/>
             </router-link>
         </div>
@@ -93,5 +93,10 @@
     .opt {
         background-color: #343434;
         color: #D2D2D2;
+    }
+
+    .router {
+        text-decoration: none;
+        color: black;
     }
 </style>
