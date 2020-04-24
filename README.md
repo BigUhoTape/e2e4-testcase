@@ -1,29 +1,7 @@
-# e2e4testcase
+1) git clone https://github.com/BigUhoTape/e2e4-testcase.git
 
-## Project setup
-```
-npm install
-```
+2) npm install
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
+3) npm run serve
 
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Run your tests
-```
-npm run test
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+4) Зайти на localhost
