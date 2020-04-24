@@ -1,13 +1,21 @@
 <template>
     <div class="post">
-        <p class="post__id">1</p>
-        <p class="post__title">title</p>
+        <p class="post__id">{{postData.id}}</p>
+        <p class="post__title">{{postData.title}}</p>
     </div>
 </template>
 
 <script>
     export default {
       name: 'Post',
+      props: {
+        postData: {
+          type: Object,
+          default() {
+            return {}
+          }
+        }
+      }
     }
 </script>
 
