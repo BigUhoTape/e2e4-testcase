@@ -1,7 +1,7 @@
 <template>
     <div class="allPosts">
         <div class="allPosts__posts">
-            <router-link :to="'/post/' + post.id" v-for="post in itemsOnPage" :key="post.id" class="router">
+            <router-link :to="'/post/' + post.id" v-for="(post, i) in itemsOnPage" :key="i" class="router">
                 <Post :postData="post"/>
             </router-link>
         </div>

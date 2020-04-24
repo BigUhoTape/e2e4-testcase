@@ -15,6 +15,7 @@
   "devDependencies": {
     "@vue/cli-plugin-babel": "^4.3.0",
     "@vue/cli-service": "^4.3.0",
+    "axios": "^0.19.2",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
     "lodash": "^4.17.15",
