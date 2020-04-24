@@ -4,6 +4,7 @@ import VueRouter from 'vue-router'
 import AllPosts from "../views/AllPosts";
 import AddPost from "../views/AddPost";
 import Registration from "../views/Registration";
+import SinglePost from "../views/SinglePost";
 
 Vue.use(VueRouter);
 
@@ -23,6 +24,11 @@ Vue.use(VueRouter);
       name: 'Registration',
       component: Registration
     },
+    {
+      path: '/post/:id',
+      name: 'SinglePost',
+      component: SinglePost
+    }
   ];
 
 const router = new VueRouter({
