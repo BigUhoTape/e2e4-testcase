@@ -20,6 +20,9 @@ export default new Vuex.Store({
         .catch(e => console.log(e));
     }
   },
-  modules: {
+  getters: {
+    GET_POST_BY_ID: state => id => {
+      console.log(state.posts[id-1].title);
+    }
   }
 })
