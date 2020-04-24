@@ -1,5 +1,7 @@
 <template>
-    <div class="allPosts">All posts</div>
+    <div class="allPosts">
+
+    </div>
 </template>
 
 <script>
