@@ -1,9 +1,9 @@
 <template>
     <div class="allPosts">
         <div class="allPosts__posts">
-            <div v-for="post in itemsOnPage" :key="post.id">
+            <router-link :to="'/post/' + post.id" v-for="post in itemsOnPage" :key="post.id">
                 <Post :postData="post"/>
-            </div>
+            </router-link>
         </div>
         <Paginate v-model="page"
                   :page-count="pageCount"
