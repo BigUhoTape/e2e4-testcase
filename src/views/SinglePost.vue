@@ -1,6 +1,6 @@
 <template>
     <div class="singlePost">
-        <button @click="$router.push('/')" class="singlePost__back">Back</button>
+        <button @click="$router.go(-1)" class="singlePost__back">Back</button>
         <div class="singlePost-post">
             <h3 class="singlePost-post__title"><strong>{{post.id}})</strong>{{post.title}}</h3>
             <p class="singlePost-post__body">{{post.body}}</p>
