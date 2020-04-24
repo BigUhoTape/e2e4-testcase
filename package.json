@@ -17,7 +17,9 @@
     "@vue/cli-service": "^4.3.0",
     "less": "^3.0.4",
     "less-loader": "^5.0.0",
-    "vue-template-compiler": "^2.6.11"
+    "lodash": "^4.17.15",
+    "vue-template-compiler": "^2.6.11",
+    "vuejs-paginate": "^2.1.0"
   },
   "browserslist": [
     "> 1%",
