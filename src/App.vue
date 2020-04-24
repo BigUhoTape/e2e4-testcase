@@ -7,10 +7,19 @@
 
 <script>
     import Navbar from "./components/Navbar";
+    import {mapActions} from 'vuex'
 
     export default {
       components: {
         Navbar
+      },
+      methods: {
+        ...mapActions([
+          'GET_ALL_POSTS'
+        ])
+      },
+      mounted() {
+        this.GET_ALL_POSTS();
       }
     }
 </script>
