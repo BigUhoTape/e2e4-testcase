@@ -2,13 +2,16 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import axios from 'axios'
 
+import router from '../router/index'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
     posts: [],
     users: [],
-    comments: {}
+    comments: {},
+    userOnline: {}
   },
   mutations: {
     SET_ALL_POSTS_TO_STATE(state, posts) {
@@ -19,6 +22,12 @@ export default new Vuex.Store({
     },
     PUSH_COMMENTS(state, comment) {
       state.comments[comment.id] = comment.comments;
+    },
+    SET_USER_ONLINE(state, userData) {
+      state.userOnline = userData;
+    },
+    EMPTY_USER_ONLINE(state) {
+      state.userOnline = {}
     }
   },
   actions: {
@@ -36,6 +45,22 @@ export default new Vuex.Store({
       return axios.get('https://jsonplaceholder.typicode.com/posts/' + userID + '/comments')
         .then(comments => commit('PUSH_COMMENTS', {id: userID, comments: comments.data}))
         .catch(e => console.log(e));
+    },
+    LOGIN_USER({commit}, userData) {
+      console.log(userData);
+      return fetch('https://jsonplaceholder.typicode.com/posts', {
+        method: 'POST',
+        body: JSON.stringify(userData),
+        headers: {
+          "Content-type": "application/json; charset=UTF-8"
+        }
+      })
+        .then(response => response.json())
+        .then(user => {
+          localStorage.setItem('user', JSON.stringify(user));
+          commit('SET_USER_ONLINE', user);
+          router.go(-1);
+        })
     }
   },
   getters: {
@@ -47,6 +72,9 @@ export default new Vuex.Store({
     },
     COMMENT_ID: state => id => {
       return state.comments[id];
+    },
+    USERS_LENGTH(state) {
+      return state.users.length;
     }
   }
 })

@@ -7,7 +7,7 @@
 
 <script>
     import Navbar from "./components/Navbar";
-    import {mapActions} from 'vuex'
+    import {mapActions, mapMutations} from 'vuex'
 
     export default {
       components: {
@@ -17,35 +17,20 @@
         ...mapActions([
           'GET_ALL_POSTS',
           'GET_ALL_USERS'
+        ]),
+        ...mapMutations([
+          'SET_USER_ONLINE'
         ])
       },
       mounted() {
         this.GET_ALL_POSTS();
         this.GET_ALL_USERS();
+        if (localStorage.getItem('user')) {
+            this.SET_USER_ONLINE(JSON.parse(localStorage.getItem('user')));
+        }
       }
     }
 </script>
 
 <style lang="less">
-    .navbar {
-        width: 1000px;
-        height: 100px;
-        margin: 0 auto;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        list-style: none;
-
-        &__link {
-            color: gray;
-            font-size: 30px;
-            transition: .3s;
-
-            &:hover {
-                color: black;
-                transition: .3s;
-                cursor: pointer;
-            }
-        }
-    }
 </style>
