@@ -21,7 +21,7 @@
                    v-model="name"
             >
         </div>
-        <button @click="loginUser">Sign up</button>
+        <button @click="loginUser" class="registration__btn">Sign up</button>
     </div>
 </template>
 
@@ -77,4 +77,42 @@
 </script>
 
 <style lang="less" scoped>
+    .registration {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+
+        &__btn {
+            width: 400px;
+            height: 40px;
+            border-radius: 5px;
+            font-size: 20px;
+            transition: .3s;
+
+            &:hover {
+                cursor: pointer;
+                transition: .3s;
+                color: white;
+                background-color: black;
+            }
+        }
+    }
+    .registrationInput {
+        margin-bottom: 50px;
+
+        &__input {
+            width: 400px;
+            height: 40px;
+            border: none;
+            border-bottom: 2px solid gray;
+            outline: none;
+            font-size: 20px;
+            padding-left: 10px;
+
+            &:focus {
+                border-bottom: 2px solid black;
+            }
+        }
+    }
 </style>
