@@ -2,7 +2,7 @@
     <div class="navbar">
         <router-link to="/" tag="li" class="navbar__link">All posts</router-link>
         <router-link to="/addPost" tag="li" class="navbar__link">Add post</router-link>
-        <button v-if="isUser" class="navbar__link" @click="logOut">Выйти</button>
+        <button v-if="LOGIN_STATUS" class="navbar__link" @click="logOut">Выйти</button>
         <router-link v-else
                      to="/registration"
                      tag="li"
@@ -11,28 +11,33 @@
 </template>
 
 <script>
-    import { mapMutations } from 'vuex'
+    import { mapMutations, mapGetters } from 'vuex'
 
     export default {
       name: 'Navbar',
       data() {
-        return {
-          isUser: false
-        }
+        return {}
       },
       methods: {
         ...mapMutations([
-          'EMPTY_USER_ONLINE'
+          'EMPTY_USER_ONLINE',
+          'IS_LOGIN',
+          'IS_LOGIN_FALSE'
         ]),
         logOut() {
-          this.isUser = false;
+          this.IS_LOGIN_FALSE();
           localStorage.removeItem('user');
           this.EMPTY_USER_ONLINE();
         }
       },
+      computed: {
+        ...mapGetters([
+          'LOGIN_STATUS'
+        ])
+      },
       mounted() {
         if (localStorage.getItem('user')) {
-          this.isUser = true;
+            this.IS_LOGIN();
         }
       }
     }

@@ -11,7 +11,8 @@ export default new Vuex.Store({
     posts: [],
     users: [],
     comments: {},
-    userOnline: {}
+    userOnline: {},
+    isLogin: false
   },
   mutations: {
     SET_ALL_POSTS_TO_STATE(state, posts) {
@@ -28,6 +29,12 @@ export default new Vuex.Store({
     },
     EMPTY_USER_ONLINE(state) {
       state.userOnline = {}
+    },
+    IS_LOGIN(state) {
+      state.isLogin = true;
+    },
+    IS_LOGIN_FALSE(state) {
+      state.isLogin = false;
     }
   },
   actions: {
@@ -47,7 +54,6 @@ export default new Vuex.Store({
         .catch(e => console.log(e));
     },
     LOGIN_USER({commit}, userData) {
-      console.log(userData);
       return fetch('https://jsonplaceholder.typicode.com/posts', {
         method: 'POST',
         body: JSON.stringify(userData),
@@ -58,6 +64,7 @@ export default new Vuex.Store({
         .then(response => response.json())
         .then(user => {
           localStorage.setItem('user', JSON.stringify(user));
+          commit('IS_LOGIN');
           commit('SET_USER_ONLINE', user);
           router.go(-1);
         })
@@ -75,6 +82,9 @@ export default new Vuex.Store({
     },
     USERS_LENGTH(state) {
       return state.users.length;
+    },
+    LOGIN_STATUS(state) {
+      return state.isLogin;
     }
   }
 })
