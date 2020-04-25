@@ -15,11 +15,13 @@
       },
       methods: {
         ...mapActions([
-          'GET_ALL_POSTS'
+          'GET_ALL_POSTS',
+          'GET_ALL_USERS'
         ])
       },
       mounted() {
         this.GET_ALL_POSTS();
+        this.GET_ALL_USERS();
       }
     }
 </script>
