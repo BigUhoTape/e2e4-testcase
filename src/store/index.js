@@ -35,6 +35,9 @@ export default new Vuex.Store({
     },
     IS_LOGIN_FALSE(state) {
       state.isLogin = false;
+    },
+    ADD_POST_TO_STATE(state, data) {
+      state.comments[data.postId].unshift(data);
     }
   },
   actions: {
@@ -68,6 +71,12 @@ export default new Vuex.Store({
           commit('SET_USER_ONLINE', user);
           router.go(-1);
         })
+    },
+    POST_COMMENT({commit}, data) {
+      console.log(data);
+      return axios.post('https://jsonplaceholder.typicode.com/comments', data)
+        .then(response => commit('ADD_POST_TO_STATE', response.data))
+        .catch(e => console.log(e));
     }
   },
   getters: {

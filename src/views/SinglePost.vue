@@ -10,6 +10,7 @@
                      v-if="!LOGIN_STATUS"
                      class="singlePost__register"
         >Register to start commenting</router-link>
+        <CommentForm v-else></CommentForm>
         <div class="singlePost__comment" v-for="(comment, i) in comments" :key="i">
             <Comment :commentData="comment"/>
         </div>
@@ -19,11 +20,13 @@
 <script>
     import {mapActions, mapGetters} from 'vuex'
     import Comment from './../components/Comment'
+    import CommentForm from "../components/CommentForm";
 
     export default {
       name: 'SinglePost',
       components: {
-        Comment
+        Comment,
+        CommentForm
       },
       data() {
         return {
@@ -53,7 +56,11 @@
             .then(() => this.post = this.GET_POST_BY_ID(this.id))
             .then(() => this.GET_ALL_USERS())
             .then(() => this.userPost = this.GET_USER_BY_ID(this.post.userId))
-            .then(() => this.GET_COMMENT_BY_ID(this.id))
+            .then(() => {
+              if (!this.$store.state.comments[this.id]) {
+                return this.GET_COMMENT_BY_ID(this.id)
+              }
+            })
             .then(() => this.comments = this.COMMENT_ID(this.id))
       }
     }
