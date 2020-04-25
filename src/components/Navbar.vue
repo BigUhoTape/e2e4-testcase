@@ -28,6 +28,9 @@
           this.IS_LOGIN_FALSE();
           localStorage.removeItem('user');
           this.EMPTY_USER_ONLINE();
+          if (this.$route.name === 'AddPost') {
+            this.$router.push('/');
+          }
         }
       },
       computed: {

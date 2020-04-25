@@ -17,7 +17,10 @@ Vue.use(VueRouter);
     {
       path: '/addPost',
       name: 'AddPost',
-      component: AddPost
+      component: AddPost,
+      meta: {
+        isLogined: true
+      }
     },
     {
       path: '/registration',
@@ -47,6 +50,18 @@ router.beforeEach((to, from, next) => {
       return
     }
     next('/');
+  } else {
+    next();
+  }
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.isLogined)) {
+    if (localStorage.getItem('user')) {
+      next();
+      return
+    }
+     else next('/registration');
   } else {
     next();
   }
