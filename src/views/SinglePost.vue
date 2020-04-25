@@ -18,26 +18,31 @@
         return {
           id: this.$route.params.id,
           post: {},
-          userPost: {}
+          userPost: {},
+          comments: []
         }
       },
       computed: {
         ...mapGetters([
           'GET_POST_BY_ID',
-          'GET_USER_BY_ID'
+          'GET_USER_BY_ID',
+          'COMMENT_ID'
         ])
       },
       methods: {
         ...mapActions([
           'GET_ALL_POSTS',
-          'GET_ALL_USERS'
+          'GET_ALL_USERS',
+          'GET_COMMENT_BY_ID'
         ])
       },
       mounted() {
         this.GET_ALL_POSTS()
             .then(() => this.post = this.GET_POST_BY_ID(this.id))
             .then(() => this.GET_ALL_USERS())
-            .then(() => this.userPost = this.GET_USER_BY_ID(this.post.userId));
+            .then(() => this.userPost = this.GET_USER_BY_ID(this.post.userId))
+            .then(() => this.GET_COMMENT_BY_ID(this.id))
+            .then(() => this.comments = this.COMMENT_ID(this.id))
       }
     }
 </script>

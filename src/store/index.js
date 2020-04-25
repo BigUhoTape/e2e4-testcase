@@ -7,7 +7,8 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     posts: [],
-    users: []
+    users: [],
+    comments: {}
   },
   mutations: {
     SET_ALL_POSTS_TO_STATE(state, posts) {
@@ -15,6 +16,9 @@ export default new Vuex.Store({
     },
     SET_ALL_USERS(state, users) {
       state.users = users;
+    },
+    PUSH_COMMENTS(state, comment) {
+      state.comments[comment.id] = comment.comments;
     }
   },
   actions: {
@@ -27,6 +31,11 @@ export default new Vuex.Store({
       return axios.get('https://jsonplaceholder.typicode.com/users')
         .then(users => commit('SET_ALL_USERS', users.data))
         .catch(e => console.log(e));
+    },
+    GET_COMMENT_BY_ID({commit}, userID) {
+      return axios.get('https://jsonplaceholder.typicode.com/posts/' + userID + '/comments')
+        .then(comments => commit('PUSH_COMMENTS', {id: userID, comments: comments.data}))
+        .catch(e => console.log(e));
     }
   },
   getters: {
@@ -35,6 +44,9 @@ export default new Vuex.Store({
     },
     GET_USER_BY_ID: state => id => {
       return state.users.find(item => item.id.toString() === id.toString());
+    },
+    COMMENT_ID: state => id => {
+      return state.comments[id];
     }
   }
 })
