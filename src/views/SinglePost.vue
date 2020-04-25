@@ -6,14 +6,21 @@
             <p class="singlePost-post__body">{{post.body}}</p>
             <p class="singlePost-post__user">{{userPost.name}}  <span>{{userPost.email}}</span> </p>
         </div>
+        <div class="singlePost__comment" v-for="(comment, i) in comments" :key="i">
+            <Comment :commentData="comment"/>
+        </div>
     </div>
 </template>
 
 <script>
     import {mapActions, mapGetters} from 'vuex'
+    import Comment from './../components/Comment'
 
     export default {
       name: 'SinglePost',
+      components: {
+        Comment
+      },
       data() {
         return {
           id: this.$route.params.id,
