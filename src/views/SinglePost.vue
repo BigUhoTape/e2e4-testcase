@@ -6,6 +6,10 @@
             <p class="singlePost-post__body">{{post.body}}</p>
             <p class="singlePost-post__user">{{userPost.name}}  <span>{{userPost.email}}</span> </p>
         </div>
+        <router-link to="/registration"
+                     v-if="!LOGIN_STATUS"
+                     class="singlePost__register"
+        >Register to start commenting</router-link>
         <div class="singlePost__comment" v-for="(comment, i) in comments" :key="i">
             <Comment :commentData="comment"/>
         </div>
@@ -33,7 +37,8 @@
         ...mapGetters([
           'GET_POST_BY_ID',
           'GET_USER_BY_ID',
-          'COMMENT_ID'
+          'COMMENT_ID',
+          'LOGIN_STATUS'
         ])
       },
       methods: {
@@ -56,8 +61,24 @@
 
 <style lang="less" scoped>
     .singlePost {
-        width: 1200px;
+        width: 1000px;
         margin: 0 auto;
+
+        &__register {
+            margin-top: 100px;
+            padding: 20px;
+            background-color: #d26959;
+            text-decoration: none;
+            color: white;
+            font-size: 20px;
+            border-radius: 6px;
+            transition: .3s;
+
+            &:hover {
+                background-color:red;
+                transition: .3s;
+            }
+        }
 
         &__back {
             width: 100px;
@@ -81,6 +102,7 @@
             width: 1000px;
             margin: 0 auto;
             border: 1px solid rgba(0, 0, 0, .3);
+            margin-bottom: 40px;
 
             &__title {
                 font-size: 30px;
