@@ -5,36 +5,91 @@
                    placeholder="Enter your email"
                    class="registrationInput__input"
                    v-model="email"
+                   :class="{'isInvalid': $v.email.$error}"
+                   @input="$v.email.$touch()"
             >
+            <div v-if="isEmailValid">
+                <div class="registrationInput__error" v-if="!$v.email.required">Email is required</div>
+                <div class="registrationInput__error" v-if="!$v.email.email">Email is invalid</div>
+            </div>
         </div>
         <div class="registrationInput">
             <input type="text"
                    placeholder="Enter your username"
                    class="registrationInput__input"
                    v-model="userName"
+                   :class="{'isInvalid': $v.userName.$error}"
+                   @input="$v.userName.$touch()"
             >
+            <div v-if="isUserNameValid">
+                <div v-if="!$v.userName.required" class="registrationInput__error">username is required</div>
+                <div class="registrationInput__error" v-if="!$v.userName.minLength">
+                    Min length of username is {{$v.userName.$params.minLength.min}}. Now it's {{ userName.length }}
+                </div>
+                <div class="registrationInput__error" v-if="!$v.userName.alpha">Name must contain a-z а-яё 0-9</div>
+            </div>
         </div>
         <div class="registrationInput">
             <input type="text"
-                   placeholder="Enter your username"
+                   placeholder="Enter your name"
                    class="registrationInput__input"
                    v-model="name"
+                   :class="{'isInvalid': $v.name.$error}"
+                   @input="$v.name.$touch()"
             >
+            <div v-if="isNameValid">
+                <div class="registrationInput__error" v-if="!$v.name.required">Name is required</div>
+                <div class="registrationInput__error" v-if="!$v.name.alpha">Name must contain a-z а-яё</div>
+            </div>
         </div>
-        <button @click="loginUser" class="registration__btn">Sign up</button>
+        <button @click="loginUser"
+                :disabled="$v.$invalid"
+                :class="{'disabled': $v.$invalid}"
+                class="registration__btn"
+        >Sign up</button>
     </div>
 </template>
 
 <script>
     import { mapGetters, mapActions } from 'vuex'
+    import { required, email, minLength } from 'vuelidate/lib/validators'
 
   export default {
     name: 'Registration',
+    validations: {
+      email: {
+        required,
+        email,
+      },
+      userName: {
+        required,
+        minLength: minLength(6),
+        alpha: val => /^[a-zа-яё0-9]*$/i.test(val),
+      },
+      name: {
+        required,
+        alpha: val => /^[a-zа-яё]*$/i.test(val),
+      }
+    },
+    watch: {
+      email() {
+        this.isEmailValid = true;
+      },
+      userName() {
+        this.isUserNameValid = true;
+      },
+      name() {
+        this.isNameValid = true;
+      }
+    },
     data() {
         return {
           email: '',
           userName: '',
-          name: ''
+          name: '',
+          isEmailValid: false,
+          isUserNameValid: false,
+          isNameValid: false
         }
     },
     computed: {
@@ -113,6 +168,25 @@
             &:focus {
                 border-bottom: 2px solid black;
             }
+        }
+
+        &__error {
+            padding-left: 10px;
+            margin-top: 10px;
+            color: red;
+        }
+    }
+    .isInvalid {
+        border-bottom: 2px solid red !important;
+    }
+    .disabled {
+        background-color: #b2b2b2;
+        color: #D2D2D2;
+
+        &:hover {
+            background-color: #b2b2b2;
+            color: #D2D2D2;
+            cursor: not-allowed;
         }
     }
 </style>
