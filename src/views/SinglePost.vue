@@ -1,16 +1,19 @@
 <template>
     <div class="singlePost">
-        <button @click="$router.go(-1)" class="singlePost__back">Back</button>
-        <div class="singlePost-post">
-            <h3 class="singlePost-post__title"><strong>{{post.id}} </strong>{{post.title}}</h3>
-            <p class="singlePost-post__body">{{post.body}}</p>
+        <div v-if="!post" class="singlePost__error">Post does not exist</div>
+        <div v-else>
+            <button @click="$router.go(-1)" class="singlePost__back">Back</button>
+            <div class="singlePost-post">
+                <h3 class="singlePost-post__title"><strong>{{post.id}} </strong>{{post.title}}</h3>
+                <p class="singlePost-post__body">{{post.body}}</p>
+            </div>
+            <router-link to="/registration"
+                         v-if="!LOGIN_STATUS"
+                         class="singlePost__register"
+            >Register to start commenting</router-link>
+            <CommentForm v-else></CommentForm>
+            <Comment />
         </div>
-        <router-link to="/registration"
-                     v-if="!LOGIN_STATUS"
-                     class="singlePost__register"
-        >Register to start commenting</router-link>
-        <CommentForm v-else></CommentForm>
-        <Comment />
     </div>
 </template>
 
@@ -59,6 +62,12 @@
     .singlePost {
         width: 1000px;
         margin: 0 auto;
+
+        &__error {
+            display: flex;
+            justify-content: center;
+            font-size: 50px;
+        }
 
         &__register {
             margin-top: 100px;
