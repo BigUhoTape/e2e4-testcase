@@ -4,4 +4,4 @@
 
 3) npm run serve
 
-4) Зайти на localhost
+4) Зайти на http://localhost:8080
