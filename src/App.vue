@@ -23,8 +23,8 @@
         ])
       },
       mounted() {
-        this.GET_ALL_POSTS();
         this.GET_ALL_USERS();
+        this.GET_ALL_POSTS();
         if (localStorage.getItem('user')) {
             this.SET_USER_ONLINE(JSON.parse(localStorage.getItem('user')));
         }

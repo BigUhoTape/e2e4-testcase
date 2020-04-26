@@ -4,16 +4,13 @@
         <div class="singlePost-post">
             <h3 class="singlePost-post__title"><strong>{{post.id}} </strong>{{post.title}}</h3>
             <p class="singlePost-post__body">{{post.body}}</p>
-            <p class="singlePost-post__user">{{userPost.name}}  <span>{{userPost.email}}</span> </p>
         </div>
         <router-link to="/registration"
                      v-if="!LOGIN_STATUS"
                      class="singlePost__register"
         >Register to start commenting</router-link>
         <CommentForm v-else></CommentForm>
-        <div class="singlePost__comment" v-for="(comment, i) in comments" :key="i">
-            <Comment :commentData="comment"/>
-        </div>
+        <Comment />
     </div>
 </template>
 
@@ -31,37 +28,29 @@
       data() {
         return {
           id: this.$route.params.id,
-          post: {},
-          userPost: {},
-          comments: []
+          post: {}
         }
       },
       computed: {
         ...mapGetters([
           'GET_POST_BY_ID',
-          'GET_USER_BY_ID',
-          'COMMENT_ID',
-          'LOGIN_STATUS'
+          'LOGIN_STATUS',
+          'ISLOADER'
         ])
       },
       methods: {
         ...mapActions([
           'GET_ALL_POSTS',
-          'GET_ALL_USERS',
-          'GET_COMMENT_BY_ID'
+          'GET_ALL_USERS'
         ])
       },
       mounted() {
-        this.GET_ALL_POSTS()
+        if (this.ISLOADER) {
+          this.post = this.GET_POST_BY_ID(this.id)
+        } else {
+          this.GET_ALL_POSTS()
             .then(() => this.post = this.GET_POST_BY_ID(this.id))
-            .then(() => this.GET_ALL_USERS())
-            .then(() => this.userPost = this.GET_USER_BY_ID(this.post.userId))
-            .then(() => {
-              if (!this.$store.state.comments[this.id]) {
-                return this.GET_COMMENT_BY_ID(this.id)
-              }
-            })
-            .then(() => this.comments = this.COMMENT_ID(this.id))
+        }
       }
     }
 </script>

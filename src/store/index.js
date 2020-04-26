@@ -12,11 +12,13 @@ export default new Vuex.Store({
     users: [],
     comments: {},
     userOnline: {},
-    isLogin: false
+    isLogin: false,
+    isLoader: false
   },
   mutations: {
     SET_ALL_POSTS_TO_STATE(state, posts) {
       state.posts = posts;
+      state.isLoader = true;
     },
     SET_ALL_USERS(state, users) {
       state.users = users;
@@ -26,6 +28,7 @@ export default new Vuex.Store({
     },
     SET_USER_ONLINE(state, userData) {
       state.userOnline = userData;
+      state.users.push(userData);
     },
     EMPTY_USER_ONLINE(state) {
       state.userOnline = {}
@@ -36,8 +39,11 @@ export default new Vuex.Store({
     IS_LOGIN_FALSE(state) {
       state.isLogin = false;
     },
-    ADD_POST_TO_STATE(state, data) {
+    ADD_COMMENT_TO_STATE(state, data) {
       state.comments[data.postId].unshift(data);
+    },
+    ADD_NEW_POST(state, post) {
+      state.posts.unshift(post);
     }
   },
   actions: {
@@ -73,9 +79,16 @@ export default new Vuex.Store({
         })
     },
     POST_COMMENT({commit}, data) {
-      console.log(data);
       return axios.post('https://jsonplaceholder.typicode.com/comments', data)
-        .then(response => commit('ADD_POST_TO_STATE', response.data))
+        .then(response => commit('ADD_COMMENT_TO_STATE', response.data))
+        .catch(e => console.log(e));
+    },
+    POST_NEW_POST({commit}, postData) {
+      return axios.post('https://jsonplaceholder.typicode.com/posts', postData)
+        .then(response => {
+          commit('ADD_NEW_POST', response.data);
+          router.push('/');
+        })
         .catch(e => console.log(e));
     }
   },
@@ -84,7 +97,7 @@ export default new Vuex.Store({
       return state.posts.find(item => item.id.toString() === id.toString());
     },
     GET_USER_BY_ID: state => id => {
-      return state.users.find(item => item.id.toString() === id.toString());
+      return state.users.find(item => item.id === id)
     },
     COMMENT_ID: state => id => {
       return state.comments[id];
@@ -94,6 +107,12 @@ export default new Vuex.Store({
     },
     LOGIN_STATUS(state) {
       return state.isLogin;
+    },
+    POSTS(state) {
+      return state.posts;
+    },
+    ISLOADER(state) {
+      return state.isLoader;
     }
   }
 })

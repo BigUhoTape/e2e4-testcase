@@ -39,7 +39,11 @@
             email: this.$store.state.userOnline.email,
             body: this.commentBody
           };
-          this.POST_COMMENT(comment);
+          this.POST_COMMENT(comment)
+            .then(() => {
+            this.commentBody = '';
+            this.commentName = ''
+          })
         }
       }
     }
